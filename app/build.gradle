@@ -1,14 +1,56 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.tencent.squeezencnn"
         archivesBaseName = "$applicationId"
 
         minSdkVersion 24
+
+        ndkVersion "23.1.7779620"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("../rk3568.platform.keystore")
+            storePassword 'android'
+            keyAlias 'alias_platform_rk3568'
+            keyPassword 'android'
+        }
+        staging {
+            storeFile file("../rk3568.platform.keystore")
+            storePassword 'android'
+            keyAlias 'alias_platform_rk3568'
+            keyPassword 'android'
+        }
+        debug {
+            storeFile file("../rk3568.platform.keystore")
+            storePassword 'android'
+            keyAlias 'alias_platform_rk3568'
+            keyPassword 'android'
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        staging {
+            signingConfig signingConfigs.staging
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
     externalNativeBuild {
